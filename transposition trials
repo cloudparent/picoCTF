@@ -1,0 +1,2 @@
+the text is grouped in threes and decoded by arranging the 1st,2nd,3rd character of every group in the order 312 where 3, 1, 2 are the positions of the characters from left to right in each group. Thus we get the following decryption:
+the flag is picoCTF{7R4N5P051N6_15_3XP3N51v3_109Ab02E}
