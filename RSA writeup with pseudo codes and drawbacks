@@ -1,0 +1,68 @@
+RSA (Rivest–Shamir–Adleman) is a widely used public-key cryptosystem that enables secure communication over an insecure channel. It is based on the mathematical properties of large prime numbers and the difficulty of factoring the product of two large primes. Here's a write-up on RSA, including pseudo-code, drawbacks, and security issues.
+
+### RSA Algorithm Overview:
+
+1. Key Generation:
+   - Select two large prime numbers, `p` and `q`.
+   - Compute `n = p * q`.
+   - Calculate Euler's totient function: `φ(n) = (p-1)(q-1)`.
+   - Choose an integer `e` such that `1 < e < φ(n)` and `e` is coprime to `φ(n)`.
+   - Calculate `d`, the modular multiplicative inverse of `e` modulo `φ(n)`.
+
+   Pseudo-code for key generation:
+   ```python
+   def generate_keypair():
+       p, q = generate_large_primes()
+       n = p * q
+       phi_n = (p - 1) * (q - 1)
+       e = choose_coprime(phi_n)
+       d = modular_inverse(e, phi_n)
+       public_key = (n, e)
+       private_key = (n, d)
+       return public_key, private_key
+   ```
+
+2. Encryption:
+   - Convert the plaintext message `M` to an integer.
+   - Compute the ciphertext `C ≡ M^e (mod n)`.
+
+   Pseudo-code for encryption:
+   ```python
+   def encrypt(message, public_key):
+       n, e = public_key
+       cipher_text = pow(message, e, n)
+       return cipher_text
+   ```
+
+3. Decryption:
+   - Compute the original message `M ≡ C^d (mod n)`.
+
+   Pseudo-code for decryption:
+   ```python
+   def decrypt(cipher_text, private_key):
+       n, d = private_key
+       original_message = pow(cipher_text, d, n)
+       return original_message
+   ```
+
+### Drawbacks and Security Issues:
+
+1. Key Length:
+   - Smaller key lengths can be vulnerable to attacks, especially with the advent of more powerful computing resources. Longer key lengths are recommended for enhanced security.
+
+2. Padding Schemes:
+   - RSA requires the use of padding schemes to prevent certain cryptographic attacks. Poorly chosen or implemented padding schemes may introduce vulnerabilities.
+
+3. Timing Attacks:
+   - The timing of certain operations in RSA implementations can leak information about the private key, making it susceptible to timing attacks.
+
+4. Side-Channel Attacks:
+   - Attacks based on information gained from the physical implementation of the cryptographic algorithm, such as power consumption or electromagnetic emanations, can compromise RSA security.
+
+5. Quantum Computing:
+   - RSA's security is based on the difficulty of factoring large numbers, and quantum algorithms, such as Shor's algorithm, could potentially break RSA by efficiently factoring the product of large primes.
+
+6. Key Exchange:
+   - RSA is often used for key exchange in hybrid cryptosystems, but it is computationally expensive for bulk data encryption. Newer algorithms like ECC (Elliptic Curve Cryptography) are more efficient for key exchange.
+
+It's important to stay updated on cryptographic advancements and best practices to address emerging threats and ensure the continued security of RSA and other cryptographic systems.
